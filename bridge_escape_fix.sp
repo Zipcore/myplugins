@@ -11,13 +11,14 @@ public Plugin:myinfo =
     name = "Bridge Escape Fix",
     author = "Jacob",
     description = "Kills the unlimited tank spawns on parish finale.",
-    version = "1.1",
+    version = "1.2",
     url = "github.com/jacob404/myplugins"
 }
 
 public OnPluginStart()
 {
     HookEvent("tank_spawn", Event_TankSpawn);
+    HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 }
 
 public OnMapStart()
@@ -42,6 +43,10 @@ public Event_TankSpawn(Handle:event, const String:name[], bool:dontBroadcast)
     if(isBridge && iTankCount >= 3)
     {
         ForcePlayerSuicide(tank);
-        return Plugin_Handled;
     }
+}
+
+public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+{
+    iTankCount = 0;
 }
