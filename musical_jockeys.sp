@@ -11,13 +11,18 @@ public Plugin:myinfo =
     name = "Musical Jockeys",
     author = "Jacob",
     description = "Prevents jockeys being able to spawn without making any noise.",
-    version = "1.0",
+    version = "1.1",
     url = "github.com/jacob404/myplugins"
 }
 
 public OnPluginStart()
 {
     HookEvent("player_spawn", Event_PlayerSpawn);
+}
+
+public OnMapStart()
+{
+	PrecacheSound("music/bacteria/jockeybacterias.wav");
 }
 
 public L4D_OnEnterGhostState(client)
