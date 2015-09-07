@@ -32,6 +32,11 @@
 				"linux"     "430"
 				"windows"	"317"
 			}
+			"HandleCustomCollision_SlamCheck"
+			{
+				"linux"    "2154"
+				"windows"  "871"
+			}
 		}
 	}
 }

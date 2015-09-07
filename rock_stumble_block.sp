@@ -10,7 +10,7 @@ public Plugin:myinfo =
     name = "Tank Rock Stumble Block",
     author = "Jacob",
     description = "Fixes rocks disappearing if tank gets stumbled while throwing.",
-    version = "0.1",
+    version = "1.0",
     url = "github.com/jacob404/myplugins"
 }
 
@@ -25,7 +25,7 @@ public Action:UnblockStumble(Handle:timer)
     blockStumble = false;
 }
 
-public Action:L4D2_OnStagger(target)
+public Action:L4D2_OnStagger(target, source)
 {
     if (GetClientTeam(target) != 3) return Plugin_Continue;
     if (GetInfectedClass(target) != 8 || !blockStumble) return Plugin_Continue;

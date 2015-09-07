@@ -4,14 +4,18 @@
 #include <sdktools>
 
 new Handle:infected_fire_immunity;
+<<<<<<< HEAD
 new bool:inWait[MAXPLAYERS + 1] = false;
+=======
+new bool:inWait[MAXPLAYERS+1] = false;
+>>>>>>> 18f71975d6102a463ddfd58724b4420350944267
 
 public Plugin:myinfo = 
 {
     name = "SI Fire Immunity",
     author = "Jacob",
     description = "Special Infected fire damage management.",
-    version = "2.0",
+    version = "2.1",
     url = "github.com/jacob404/myplugins"
 }
 
@@ -23,7 +27,6 @@ public OnPluginStart()
 
 public SIOnFire(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
     if(!IsValidClient(client) || !(GetClientTeam(client) == 3)) return;
     
@@ -44,7 +47,11 @@ public SIOnFire(Handle:event, const String:name[], bool:dontBroadcast)
  
 public Action:Extinguish(Handle:timer, any:client)
 {
+<<<<<<< HEAD
     if(!inWait[client])
+=======
+    if(IsValidClient(client) && !inWait[client])
+>>>>>>> 18f71975d6102a463ddfd58724b4420350944267
     {
         ExtinguishEntity(client);
         inWait[client] = true;
@@ -54,7 +61,11 @@ public Action:Extinguish(Handle:timer, any:client)
 
 public Action:ExtinguishWait(Handle:timer, any:client)
 {
+<<<<<<< HEAD
    inWait[client] = false;
+=======
+   if (IsValidClient(client)) inWait[client] = false;
+>>>>>>> 18f71975d6102a463ddfd58724b4420350944267
 }
 
 stock bool:IsValidClient(client, bool:nobots = true)
@@ -64,4 +75,4 @@ stock bool:IsValidClient(client, bool:nobots = true)
         return false; 
     }
     return IsClientInGame(client); 
-}  
+}

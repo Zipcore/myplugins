@@ -3,15 +3,17 @@
 #include <sourcemod>
 #include <sdktools>
 
-new bool:isBridge = false;
-new iTankCount = 0;
+new bool:g_bIsBridge = false;
+new bool:g_bIsRealTank = true;
+new g_iTankCount = 0;
+
 
 public Plugin:myinfo = 
 {
     name = "Bridge Escape Fix",
     author = "Jacob",
     description = "Kills the unlimited tank spawns on parish finale.",
-    version = "1.2",
+    version = "1.3",
     url = "github.com/jacob404/myplugins"
 }
 
@@ -27,26 +29,33 @@ public OnMapStart()
     GetCurrentMap(mapname, sizeof(mapname));
     if(StrEqual(mapname, "c5m5_bridge"))
     {
-        isBridge = true;
+        g_bIsBridge = true;
     }
     else
     {
-        isBridge = false;
+        g_bIsBridge = false;
     }
-    iTankCount = 0;
+    g_iTankCount = 0;
 }
 
 public Event_TankSpawn(Handle:event, const String:name[], bool:dontBroadcast)
 {
     new tank = GetClientOfUserId(GetEventInt(event, "userid"));
-    iTankCount++;
-    if(isBridge && iTankCount >= 3)
+    if(g_bIsRealTank)
     {
-        ForcePlayerSuicide(tank);
+        g_iTankCount++;
+        g_bIsRealTank = false;
+        CreateTimer(5.0, TankSpawnTimer);
     }
+    if(g_bIsBridge && g_iTankCount >= 3) ForcePlayerSuicide(tank);
+}
+
+public Action:TankSpawnTimer(Handle:timer)
+{
+    g_bIsRealTank = true;
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    iTankCount = 0;
+    g_iTankCount = 0;
 }
