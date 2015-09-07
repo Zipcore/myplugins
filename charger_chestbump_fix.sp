@@ -1,6 +1,7 @@
 #pragma semicolon 1
 
 #include <sourcemod>
+#include <left4downtown>
 
 #define JBE_REL8_OPCODE 0x76
 
@@ -132,4 +133,17 @@ Address:FindPatchTarget(Handle:hGamedata)
 		}
 	}
 	return pTarget;
+}
+
+public Action:L4D2_OnEntityShoved(client, entity, weapon, Float:vector[3], bool:bIsHunterDeadstop)
+{
+	if(IsValidPlayer(entity) && GetEntProp(entity, Prop_Send, "m_zombieClass") == 6) return Plugin_Handled;
+	return Plugin_Continue;
+}
+
+bool:IsValidPlayer(client)
+{
+        if (client <= 0 || client > MaxClients) return false;
+        if (!IsClientInGame(client)) return false;
+        return true;
 }

@@ -4,7 +4,7 @@
 #include <sdktools>
 
 new Handle:infected_fire_immunity;
-new bool:inWait = false;
+new bool:inWait[MAXPLAYERS + 1] = false;
 
 public Plugin:myinfo = 
 {
@@ -44,17 +44,17 @@ public SIOnFire(Handle:event, const String:name[], bool:dontBroadcast)
  
 public Action:Extinguish(Handle:timer, any:client)
 {
-    if(!inWait)
+    if(!inWait[client])
     {
         ExtinguishEntity(client);
-        inWait = true;
+        inWait[client] = true;
         CreateTimer(1.2, ExtinguishWait, client);
     }
 }
 
 public Action:ExtinguishWait(Handle:timer, any:client)
 {
-   inWait = false;
+   inWait[client] = false;
 }
 
 stock bool:IsValidClient(client, bool:nobots = true)
